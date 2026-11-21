@@ -1,0 +1,1 @@
+import Link from "next/link";export default function Quote(){return <><header className="wrap nav"><Link href="/">МЗСО</Link></header><section className="hero"><div className="wrap"><h1>Запрос КП</h1><p>Форма запроса будет подключена после согласования обработки данных и юридических документов.</p></div></section></>}
