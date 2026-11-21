@@ -1,0 +1,1 @@
+import {PageHero} from '@/components/ui';export default function Page(){return <><PageHero title="Доставка" description="Информация об условиях сотрудничества с МЗСО."/><section className="section section-light"><div className="container"><h2>Условия уточняются</h2><p>Информация будет опубликована после согласования условий с предприятием.</p></div></section></>}
