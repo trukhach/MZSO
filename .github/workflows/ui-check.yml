@@ -6,15 +6,19 @@ on:
 jobs:
   ui-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - run: npm install
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
       - run: npm run build
+      - run: test -f out/index.html && test -f out/robots.txt && test -f out/sitemap.xml
       - run: npx playwright install --with-deps chromium
-      - run: npx playwright test
+      - run: npm run test:ui
         env:
           CI: 'true'
