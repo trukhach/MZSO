@@ -4,6 +4,6 @@ export default defineConfig({
  timeout:30000,
  retries:process.env.CI?1:0,
  use:{baseURL:'http://127.0.0.1:3000',...devices['Desktop Chrome'],headless:true},
- webServer:{command:'npm run start',url:'http://127.0.0.1:3000',reuseExistingServer:!process.env.CI,timeout:120000},
+ webServer:{command:'python3 -m http.server 3000 --directory out',url:'http://127.0.0.1:3000',reuseExistingServer:!process.env.CI,timeout:120000},
  reporter:process.env.CI?'github':'list',
 });
