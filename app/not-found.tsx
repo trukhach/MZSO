@@ -1,0 +1,1 @@
+import Link from 'next/link';export default function NotFound(){return <section className="not-found container"><span>404</span><h1>Страница не найдена</h1><p>Возможно, адрес изменился или страница была удалена.</p><Link href="/" className="action">На главную</Link></section>}
