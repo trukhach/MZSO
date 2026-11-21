@@ -5,7 +5,8 @@ import { Header, Footer } from '@/components/site-shell';
 const inter = Inter({ subsets: ['latin', 'cyrillic'], display: 'swap' });
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
-  openGraph: { type: 'website', locale: 'ru_RU', siteName: 'МЗСО' },
+  twitter: { card: 'summary_large_image', title: 'МЗСО — промышленное оборудование', description: 'Конвейерное оборудование и изготовление металлических изделий по чертежам.' },
+  openGraph: { type: 'website', locale: 'ru_RU', siteName: 'МЗСО', title: 'МЗСО — промышленное оборудование', description: 'Конвейерное оборудование и изготовление металлических изделий по чертежам.' },
   title: { default: 'МЗСО — промышленное оборудование', template: '%s | МЗСО' },
   description: 'Миасский завод специального оборудования. Производство конвейерного оборудования и металлических изделий. Изготовление по чертежам.'
 };
