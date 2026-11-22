@@ -1,0 +1,35 @@
+name: Website quality audit
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify local links and image assets
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');const h=fs.readFileSync('index.html','utf8');
+          for(const match of h.matchAll(/(?:src|href)="(assets\/[^"#]+)"/g)){if(!fs.existsSync(match[1]))throw new Error('Missing '+match[1]);}
+          if((h.match(/<h1\b/g)||[]).length!==1)throw new Error('Expected one H1');
+          for(const id of ['about','products','capabilities','contacts'])if(!h.includes('id="'+id+'"'))throw new Error('Missing '+id);
+          console.log('Assets, anchors and H1: OK');
+          NODE
+      - name: Start web server
+        run: python3 -m http.server 8000 >/tmp/mzso-http.log 2>&1 &
+      - name: Run Lighthouse
+        run: |
+          npx --yes lighthouse@12 http://localhost:8000 --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --output=json --output-path=./lighthouse.json --quiet
+          node - <<'NODE'
+          const r=require('./lighthouse.json');for(const [k,v] of Object.entries(r.categories))console.log(k+': '+Math.round(v.score*100));
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-report
+          path: lighthouse.json
